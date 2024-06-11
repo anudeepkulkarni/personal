@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamic-dashboard
+  namespace: aiops-dev
+  labels:
+    app: dynamic
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dynamic
+  template:
+    metadata:
+      labels:
+        app: dynamic
+    spec:
+      containers:
+      - name: dynamic
+        image: matilda1/aiops:dev-dashboard-vtagVersion
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 8085
+      imagePullSecrets:
+      - name: dockerkeys
